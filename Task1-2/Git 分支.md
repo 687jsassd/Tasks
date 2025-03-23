@@ -76,7 +76,7 @@ feature/login
    - 条件：目标分支没有新提交
    - 结果：直接移动分支指针
 
-   ```
+   ```bash
    A ← B ← C (main)
         ↗
        D (feature)
@@ -88,7 +88,7 @@ feature/login
    - 条件：分支出现分叉
    - 结果：生成新的合并提交
 
-   ```
+   ```bash
    A ← B ← C (main)
      ↖
        D ← E (feature)
@@ -99,7 +99,7 @@ feature/login
 
 1. 冲突标识：
 
-   ```
+   ```bash
    <<<<<<< HEAD
    main分支的内容
    =======
@@ -128,7 +128,7 @@ feature/login
 
 ### Q3: 误删分支如何恢复？
 
-```
+```bash
 # 查看最近所有提交的哈希值
 git reflog
 # 根据哈希重建分支

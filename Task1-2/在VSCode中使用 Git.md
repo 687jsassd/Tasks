@@ -16,7 +16,7 @@
 
 ### 1. 关联用户信息（全局配置）
 
-```
+```bash
 git config --global user.name "你的名字"
 git config --global user.email "你的邮箱"
 ```
@@ -32,7 +32,7 @@ git config --global user.email "你的邮箱"
 
 ### 1. 初始化仓库
 
-```
+```bash
 # 方法1：终端命令
 git init
 
@@ -43,7 +43,7 @@ git init
 
 ### 2. 克隆现有仓库
 
-```
+```bash
 # 方法1：终端命令
 git clone https://github.com/username/repo.git
 
@@ -61,7 +61,7 @@ git clone https://github.com/username/repo.git
 
 ### 4. 推送代码到远程
 
-```
+```bash
 # 方法1：图形化操作
 1. 点击底部状态栏的 "同步更改" 图标（两个箭头环形）
 2. 选择 "Push"
@@ -120,7 +120,7 @@ git push
 
 2. 使用语法示例：
 
-   ```
+   ```bash
    # 忽略所有日志文件
    *.log
    
@@ -139,7 +139,7 @@ git push
 
 ### Q2: 推送被拒绝？
 
-```
+```bash
 # 先拉取远程更新
 git pull --rebase
 # 解决冲突后再推送
