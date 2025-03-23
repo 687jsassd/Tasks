@@ -2,6 +2,7 @@
 存放笔记与考核任务的仓库
 
 ## 索引
+- [Hello](hello.md)
 - [Task1-2：Github和git的基本学习](Task1-2/README.md)
     - [1.1：md基本学习](<Task1-2/Markdown学习笔记.md>)
     - [1.2：Github入门](<Task1-2/GitHub 入门学习笔记.md>)
