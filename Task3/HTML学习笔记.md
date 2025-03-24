@@ -152,6 +152,8 @@ HTML 文档由 HTML 元素定义。
 
 # HTML 属性
 
+![image-20250324201050677](html2.png)
+
 ------
 
 属性是 HTML 元素提供的附加信息。
@@ -176,3 +178,167 @@ HTML 文档由 HTML 元素定义。
 HTML 链接由 <a> 标签定义。链接的地址在 **href 属性**中指定：
 
 `<a href="http://www.666.com">哇奥！！！</a>`👈这就是一个属性实例😊
+
+---
+
+## HTML 属性常用引用属性值
+
+属性值应该始终被包括在引号内。
+
+双引号是最常用的，不过使用单引号也没有问题。
+
+- 但是如果属性值内包含单/双引号，则你只能使用另一种引号。
+
+---
+
+### 全局属性
+
+全局属性是所有 HTML 元素都可以使用的属性。
+
+**id**：为元素指定唯一的标识符。
+
+```html
+<div id="header">This is the header</div>
+```
+
+**class**：为元素指定一个或多个类名，用于 CSS 或 JavaScript 选择。
+
+```html
+<p class="text highlight">This is a highlighted text.</p>
+```
+
+**style**：用于直接在元素上应用 CSS 样式。
+
+```html
+<p style="color: blue; font-size: 14px;">This is a styled paragraph.</p>
+```
+
+**title**：为元素提供额外的提示信息，通常在鼠标悬停时显示。
+
+```html
+<abbr title="HyperText Markup Language">HTML</abbr>
+```
+
+**data-\***：用于存储自定义数据，通常通过 JavaScript 访问。
+
+```html
+<div data-user-id="12345">User Info</div>
+```
+
+### 特定元素的属性
+
+某些属性仅适用于特定的 HTML 元素。
+
+**`href`**（用于 `<a>` 和 `<link>` 元素）：指定链接的目标 URL。
+
+```html
+<a href="https://www.example.com">Visit Example</a>
+```
+
+**`src`**（用于 `<img>`, `<script>`, `<iframe>` 等元素）：指定外部资源的 URL。
+
+```html
+<img src="image.jpg" alt="An example image">
+```
+
+alt（用于 `<img>` 元素）：为图像提供替代文本，当图像无法显示时显示。
+
+```html
+<img src="image.jpg" alt="An example image">
+```
+
+**`type`**（用于 `<input>` 和 `<button>` 元素）：指定输入控件的类型。
+
+```html
+<input type="text" placeholder="Enter your name">
+```
+
+**`value`**（用于 `<input>`, `<button>`, `<option>` 等元素）：指定元素的初始值。
+
+```html
+<input type="text" value="Default Value">
+```
+
+disabled（用于表单元素）：禁用元素，使其不可交互。
+
+```html
+<input type="text" disabled>
+```
+
+**`checked`**（用于 `<input type="checkbox">` 和 `<input type="radio">`）：指定复选框或单选按钮是否被选中。
+
+```html
+<input type="checkbox" checked>
+```
+
+**`placeholder`**（用于 `<input>` 和 `<textarea>` 元素）：在输入框中显示提示文本。
+
+```html
+<input type="text" placeholder="Enter your email">
+```
+
+**`target`**（用于 `<a>` 和 `<form>` 元素）：指定链接或表单提交的目标窗口或框架。
+
+```html
+<a href="https://www.example.com" target="_blank">Open in new tab</a>
+```
+
+### 布尔属性
+
+布尔属性是指不需要值的属性，它们的存在即表示 true，不存在则表示 false。
+
+**disabled**：禁用元素。
+
+```html
+<input type="text" disabled>
+```
+
+**readonly**：使输入框只读。
+
+```html
+<input type="text" readonly>
+```
+
+**required**：指定输入字段为必填项。
+
+```html
+<input type="text" required>
+```
+
+**`autoplay`**（用于 `<audio>` 和 `<video>` 元素）：自动播放媒体。
+
+```html
+<video src="video.mp4" autoplay></video>
+```
+
+### 自定义属性
+
+HTML5 引入了 **data-\*** 属性，允许开发者自定义属性来存储额外的数据。
+
+**data-\***：用于存储自定义数据，通常通过 JavaScript 访问。
+
+```html
+<div data-user-id="12345" data-role="admin">User Info</div>
+```
+
+### 事件处理属性
+
+HTML 元素可以通过事件处理属性来响应特定的事件，如点击、鼠标悬停等。
+
+**onclick**：当用户点击元素时触发。
+
+```html
+<button onclick="alert('Button clicked!')">Click Me</button>
+```
+
+**onmouseover**：当用户将鼠标悬停在元素上时触发。
+
+```html
+<div onmouseover="this.style.backgroundColor='yellow'">Hover over me</div>
+```
+
+**onchange**：当元素的值发生变化时触发。
+
+```html
+<input type="text" onchange="alert('Value changed!')">
+```
