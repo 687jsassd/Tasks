@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>点击签到</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        #signBtn {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            margin: 20px;
+        }
+
+        #signBtn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #signBtn:active {
+            transform: scale(0.95);
+        }
+
+        #count {
+            font-size: 32px;
+            color: #333;
+            margin: 10px;
+        }
+
+        #timer {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>点击签到！</h1>
+    <button id="signBtn" onclick="handleClick()">0</button>
+    <div id="count">已签到：0 次</div>
+    <div id="timer"></div>
+
+    <script>
+        // 初始化
+        let signData = JSON.parse(localStorage.getItem('signData') || '{"count":0,"lastSign":0}');
+
+        // 引用
+        const signBtn = document.getElementById('signBtn');
+        const countDisplay = document.getElementById('count');
+        const timerDisplay = document.getElementById('timer');
+
+        // 更新
+        function updateDisplay() {
+            signBtn.textContent = signData.count;
+            countDisplay.textContent = `已签到：${signData.count} 次`;
+            checkCooldown();
+        }
+
+        // 冷却
+        function checkCooldown() {
+            const now = Date.now();
+            const remaining = 60000 - (now - signData.lastSign);
+            
+            if (remaining > 0) {
+                signBtn.disabled = true;
+                timerDisplay.textContent = `下次可签到：${Math.ceil(remaining/1000)}秒后`;
+                setTimeout(checkCooldown, 1000);
+            } else {
+                signBtn.disabled = false;
+                timerDisplay.textContent = '';
+            }
+        }
+
+        // 点击事件
+        function handleClick() {
+            const now = Date.now();
+            
+            if (now - signData.lastSign > 60000) {
+                signData.count++;
+                signData.lastSign = now;
+                localStorage.setItem('signData', JSON.stringify(signData));
+                updateDisplay();
+            }
+        }
+
+        // 初始化
+        updateDisplay();
+    </script>
+</body>
+</html>
