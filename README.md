@@ -19,4 +19,5 @@
 - [Task3：HTML学习]
     - [3.1：HTML学习笔记](<Task3/HTML学习笔记.md>)
     - [3.2：静态页面](<https://687jsassd.github.io/>)
-      > 页面仓库地址:[>点我<](https://github.com/687jsassd/687jsassd.github.io)  
+      > 页面仓库地址：[>点我<](<https://github.com/687jsassd/687jsassd.github.io>)  
+      > 不同步更新页面：[>点我<](<Task3/qiandao_v0.2.html>)
