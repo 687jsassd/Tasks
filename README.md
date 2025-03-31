@@ -1,6 +1,9 @@
-# Tasks
-存放笔记与考核任务的仓库
+# 存放笔记与考核任务的仓库
+---
+## **注意**:
+2025.03.31：原静态页面(Task3)的html文件已经从本仓库移除，其更新请移步其[仓库地址](https://github.com/687jsassd/687jsassd.github.io)。
 
+---
 ## 索引
 - [Hello](hello.md)
 - [Task1-2：Github和git的基本学习]
