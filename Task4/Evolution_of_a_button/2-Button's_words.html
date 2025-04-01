@@ -1,0 +1,132 @@
+<!-- 这是第二步，我们让按钮能够说话，准确来说，当你点击之后，按钮就会告诉我们什么 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        
+        <!-- CSS部分 -->
+        <style>
+            /* 潜在问题提示：如果消息不显示，请检查以下CSS */
+            #message {
+                display: none; /* 初始隐藏消息容器 */
+                color: green;  /* 增加可视性 */
+            }
+            #message2 {
+                display: none; /* 初始隐藏消息容器 */
+                color: aqua;  /* 增加可视性 */
+            }
+        </style>
+        <!--
+        这里CSS的作用：
+        1. 隐藏消息容器，避免初始时显示空白区域。display:none 隐藏元素，不占位。visibility:hidden 隐藏元素，占位。建议使用 display:none 隐藏。
+        2. 增加消息颜色，增强可视性。color:green 颜色为绿色。建议使用 color:green 增加颜色。
+        如果不加CSS可能会出现的问题：消息初始时不显示，且颜色不明显，影响用户体验。建议加上CSS。 
+        -->
+    </head>
+    <body>
+        <h1 style="color: red;"> 按钮的进化 </h1>
+        <p> Button's words:这是一个会说话的按钮 </p>
+        <p>下面是一个
+            <span style="background-color: aqua;">会说话的</span>
+            按钮
+        </p>
+        <p>点击按钮，按钮会告诉我们什么？</p>
+
+        <!-- 优化事件说明 -->
+        <button onclick="showMessage()"> 点击我 </button>
+            <!-- 
+            [事件机制] 点击发生时：
+            1. 浏览器识别点击事件
+            2. 查找名为showMessage的函数
+            3. 执行函数内的逻辑
+            -->
+
+        <!-- 完善容器说明 -->
+        <div id="message"></div>
+            <!-- 
+            <div> 是块级容器，默认占满整行宽度
+            使用CSS的display属性控制显隐更符合最佳实践
+            -->
+        <div id="message2"></div>
+
+        <!-- 去往下一节课的按钮👇 -->
+        <div id="nextLesson" style="display: none; margin-top: 20px">
+            <button onclick="location.href='2.1-Button_knows_your_clicks.html'"> 下一步 </button>
+        </div>
+
+
+        <script>
+            // 简化核心逻辑说明
+            function showMessage() {
+                const messageDiv = document.getElementById("message");
+                messageDiv.innerHTML = "你好！"; 
+                messageDiv.style.display = "block"; // 显示容器
+                document.getElementById('message2').innerHTML = "看看源代码来学习怎么实现！";
+                document.getElementById('message2').style.display = "block"; // 显示容器
+                document.getElementById('nextLesson').style.display = "block"; // 显示容器
+
+                /* 开发提示：
+                1. 使用 const 代替 var 更符合现代JS规范
+                2. 如果元素未找到，请检查：
+                   - id拼写是否一致
+                   - script标签位置（建议放在body末尾）
+                3. display:none 与 visibility:hidden 的区别：
+                   - none：不占位隐藏
+                   - hidden：保留占位隐藏 */
+            }
+        </script>
+    </body>
+</html>
+
+<!-- 本节总结和教学： -->
+<!-- 1. 事件机制：点击发生时，浏览器识别点击事件，查找名为showMessage的函数，执行函数内的逻辑。 -->
+<!-- 2. 容器说明：<div> 是块级容器，默认占满整行宽度，使用CSS的display属性控制显隐更符合最佳实践。 -->
+<!-- 3. 核心逻辑说明：使用 const 代替 var 更符合现代JS规范，未找到元素时请检查id拼写和script标签位置，display:none 与 visibility:hidden 的区别请参考注释。 -->
+<!-- 4. CSS说明：隐藏消息容器，增加消息颜色，建议使用 display:none 隐藏，color:green 增加颜色。 -->
+
+<!-- <div>是什么？有什么作用？
+    <div> 是HTML的容器元素，特点：
+    1. 块级元素：默认占据整行空间
+    2. 无默认样式：像白纸一样等待样式设计
+    3. 主要用途：组合其他元素，常用于布局
+    典型应用场景：
+    - 包裹内容区块
+    - 作为样式操作的目标容器
+    - 实现页面结构分隔
+    -->
+
+<!-- <style>是什么？有什么作用？还有什么属性可以加？
+    <style> 标签用于嵌入CSS样式表，作用：
+    1. 控制页面视觉呈现
+    2. 实现样式与结构分离
+    3. 支持选择器定位元素
+    可添加的常用属性：
+    - type="text/css"（默认值，可省略）
+    - media：指定样式适用的设备类型
+    示例可添加样式属性：
+    - background：背景色
+    - font-size：文字大小
+    - padding：内边距
+    -->
+
+<!-- <script>是什么？有什么作用？怎么与原按钮部分关联？
+    <script> 标签用于嵌入JavaScript代码，作用：
+    1. 添加页面交互逻辑
+    2. 操作DOM元素
+    3. 处理用户事件
+    与按钮的关联方式：
+    通过 onclick 属性绑定函数：
+    1. 按钮的onclick属性值 "showMessage()"
+    2. 在<script>中定义同名函数
+    3. 点击时自动建立关联
+    函数执行流程：
+    点击按钮 → 查找showMessage → 执行函数体
+    -->
+
+<!-- 下一步按钮会怎样进化？
+    请你按照上面的提示和知识实现：
+    2.1 一个知道你点击次数的按钮
+    2.2 一个背景颜色为黄色，字体为蓝色的按钮
+
+    然后我们将学习：
+    3-Button_can_be_moved.html 可以拖动的按钮 -->

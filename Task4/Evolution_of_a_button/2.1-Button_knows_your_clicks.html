@@ -1,0 +1,37 @@
+<!-- 欢迎回到 按钮的进化 -->
+<!-- 这是第二步的一个小分点，按钮可以知道你的点击次数 -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            #message {
+                display: none; /* 初始隐藏消息容器 */
+                color: green;  /* 增加可视性 */
+            }
+        </style>
+    </head>
+    <body>
+        <h1 style="color: red;"> 按钮的进化 </h1>
+        <p>或许多点几次就有下一节的入口了？</p>
+        <p> Button knows your clicks:你点了多少次啦？ </p>
+        <!-- 这是一个最简单的按钮 -->
+        <button onclick="showMessage()"> 点我，我知道你点了几次 </button>
+        <div id="message"></div>
+        <!-- 去往下一节课的按钮👇 -->
+        <div id="nextLesson" style="display: none; margin-top: 20px">
+            <button onclick="location.href='2.2-Button_have-yellow-background.html'"> 下一步 </button>
+        </div>
+        
+        <script>
+            var clicks = 0;
+            function showMessage()
+            {
+                clicks+=1;
+                document.getElementById('message').innerHTML = "你点了" + clicks + "次";
+                document.getElementById('message').style.display = "block"; // 显示容器
+                if(clicks>=10){document.getElementById('nextLesson').style.display = "block";} // 显示容器
+            }
+        </script>
+    </body>
