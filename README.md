@@ -1,6 +1,8 @@
 # 存放笔记与考核任务的仓库
 ---
 ## **注意**:
+2025.04.20：静态页面(Task4)的主任务的html文件只在本仓库留存一个至今最新版本的文件，不继续同步更新。其更新请移步其[仓库地址](https://github.com/687jsassd/https---github.com-687jsassd-Task4Website/)。
+
 2025.03.31：静态页面(Task3)的html文件只在本仓库留存一个至今最新版本的文件，不继续同步更新。其更新请移步其[仓库地址](https://github.com/687jsassd/687jsassd.github.io)。
 
 2025.03.31：CSS和HTML的学习还在进行中，JS基本入门。
@@ -47,4 +49,5 @@
       
     - [3.3：CSS基础学习](Task3/CSS.md)
 - [Task4：第一个精美页面] 
+   - 主任务结果:[>这里这里<](https://687jsassd.github.io/https---github.com-687jsassd-Task4Website/)
    - 跟着这个小项目学习用到的基本知识吧：[创意项目：按钮的进化](https://687jsassd.github.io/Tasks/Task4//Evolution_of_a_button/)

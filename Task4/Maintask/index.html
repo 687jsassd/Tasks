@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<!--大部分内部注释是AI生成的，分类是手动区分的，代码经过了统一化和简单规范。-->
+<!--不建议调整缩放；没有对移动端作特别调整适配-->
+<html>
+    <head>
+        <!-- 基本元数据 -->
+        <meta charset="UTF-8">  <!-- 设置文档字符编码为UTF-8 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  <!-- 引入Font Awesome图标库 -->
+    
+    <!-- 样式区域 -->
+        
+        <!-- 平滑滚动样式 -->
+        <style>
+            html {scroll-behavior: smooth;}  /* 启用平滑滚动效果 */
+        </style>
+    
+        <!-- 导航栏样式 -->
+        <style>
+            /* 导航栏容器样式 */
+            .nav-container {
+                display: flex;
+                gap: 0;
+                justify-content: center;
+                background: rgba(246, 210, 2, 0.42);  /* 半透明黄色背景 */
+                border-radius: 16px;
+                position: sticky;  /* 粘性定位 */
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;  /* 确保导航栏在最上层 */
+                margin: 0 auto;
+                width: calc(100% - 20px);  /* 宽度减去边距 */
+                box-sizing: border-box;
+                height:50px;
+                transition: background-color 0.3s ease;  /* 背景色过渡动画 */
+            }
+            /* 导航栏悬停效果 */
+            .nav-container:hover {
+                background-color: rgb(246, 140, 2);  /* 悬停时变为橙色 */
+            }
+            
+            /* 导航项基础样式 */
+            .nav-item {
+                flex: 1 1 auto;  /* 弹性布局 */
+                min-width: 0;
+                background: transparent;
+                color: white;
+                border-radius: 16px;
+                text-align: center;
+                cursor: pointer;
+                transition: all 0.8s ease;  /* 所有属性过渡动画 */
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;  /* 图标和文字间距 */
+                font-size: 1.1em;
+                height:50px;
+                text-decoration: none;
+            }
+    
+            /* 导航项悬停效果 */
+            .nav-item:hover {
+                background: #FFA500;  /* 悬停时变为橙色 */
+                color: #666;  /* 文字变深 */
+                border-radius: 16px;
+            }
+            
+            /* 特殊导航项样式 */
+            .nav-item.newthread {
+                color:#666;  /* 默认灰色文字 */
+            }
+            .nav-item.newthread:hover{
+                color: #fff;  /* 悬停时变为白色 */
+            }
+    
+            /* 二维码下拉菜单样式 */
+            .qr-dropdown {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-15px);  /* 居中定位 */
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease-out;  /* 过渡动画 */
+                padding-top: 10px;
+                pointer-events: none;  /* 初始不可交互 */
+                text-align: center; 
+            }
+    
+            /* 导航项悬停时显示二维码 */
+            .nav-item:hover .qr-dropdown {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(0);
+                pointer-events: auto;  /* 变为可交互 */
+            }
+    
+            /* 二维码图片样式 */
+            .qr-code {
+                width: 240px;
+                height: 240px;
+                background: #fff;
+                border-radius: 10px;
+                padding: 5px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* 阴影效果 */
+                border: 3px solid #FFA500;  /* 橙色边框 */
+                object-fit: contain;
+                cursor: pointer;
+                transition: transform 0.3s ease;  /* 缩放过渡 */
+            }
+    
+            /* 二维码悬停效果 */
+            .qr-code:hover {
+                transform: scale(1.05);  /* 轻微放大 */
+            }
+        </style>
+    
+        <!-- 背景图样式 -->
+        <style>
+            /* 英雄区域logo悬停效果 */
+            .hero-logo:hover {
+                transform: scale(1.25);  /* 悬停时放大 */
+            }
+        </style>
+    
+        <!-- Introduction部分样式 -->
+        <style>
+            /* 卡片容器悬停效果 */
+            .card-container:hover {
+                transform: scale(1.05);  /* 悬停时放大 */
+            }
+    
+            /* 卡片图片悬停旋转效果 */
+            .card-image:hover {
+                transform: rotate(-12.788deg);  /* 逆时针旋转 */
+            }
+    
+            /* 反向卡片图片悬停旋转效果 */
+            .card-image-rev:hover{
+                transform: rotate(12.788deg);  /* 顺时针旋转 */
+            }
+    
+            /* 卡片图片内部图片悬停效果 */
+            .card-image:hover img {
+                transform: scale(1.05);  /* 图片放大 */
+            }
+        </style>
+    
+        <!-- AboutUs部分样式 -->
+        <style>
+            /* 关于我们卡片基础样式 */
+            .about-card {
+                transition: transform 0.4s ease, box-shadow 0.4s ease;  /* 过渡效果 */
+                cursor: grab;  /* 抓取光标 */
+                position: relative;
+                user-select: none;  /* 禁止文本选择 */
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+            }
+            
+            /* 卡片悬停效果 */
+            .about-card:hover {
+                transform: scale(1.05);  /* 放大 */
+                box-shadow: 0 6px 20px rgba(0,0,0,0.25) !important;  /* 阴影加深 */
+            }
+            
+            /* 蝴蝶装饰元素样式 */
+            .decoration-butterfly {
+                transform-origin: bottom center;  /* 变换原点 */
+                transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);  /* 贝塞尔曲线过渡 */
+                filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.3))  /* 阴影效果 */
+                        drop-shadow(0 12px 12px rgba(0,0,0,0.1));
+                transform: rotate(15deg);  /* 初始旋转角度 */  
+            }
+            /* 蝴蝶悬停效果 */
+            .decoration-butterfly:hover{
+                transform: rotate(35deg) scale(1.03);  /* 旋转并放大 */
+                filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.5))  /* 阴影加深 */
+                drop-shadow(0 18px 18px rgba(0,0,0,0.4));
+            }
+            
+            /* 浮动动画关键帧 */
+            @keyframes float {
+                0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                25% { transform: translate(5%, 3%) rotate(2deg); }
+                50% { transform: translate(-4%, 5%) rotate(-3deg); }
+                75% { transform: translate(-5%, -3%) rotate(2deg); }
+            }
+        </style>
+    
+        <!-- ContactUs部分样式 -->
+        <style>
+            /* 联系按钮基础样式 */
+            .contact-button  {
+                position: relative;
+                z-index: 1;
+                transition: transform 0.3s ease, box-shadow 0.3s ease !important;  /* 强制覆盖内联样式 */
+                pointer-events: auto !important;  /* 确保可点击 */
+            }
+            /* 按钮悬停效果 */
+            .contact-button:hover {
+                transform: scale(1.05);  /* 放大 */
+                box-shadow: 0 6px 20px rgba(0,0,0,0.45) !important;  /* 阴影加深 */ 
+            }
+    
+            /* 邮件图标动画样式 */
+            .email-icon-animation {
+                position: absolute;
+                font-size: 1.3em;
+                opacity: 1;
+                transition: all 0.8s ease;  /* 平滑过渡 */
+                pointer-events: none;  /* 不响应鼠标事件 */
+                color: #2e8b57;  /* 海绿色 */
+                transform: translateY(30px);  /* 初始位置偏移 */
+            }
+            
+            /* 邮件图标移动状态 */
+            .email-icon-moving {
+                transform: translate(calc(var(--target-x) + 25px), calc(var(--target-y) - 5px)) scale(1.5);  /* 计算目标位置并放大 */
+                opacity: 0;  /* 淡出 */
+            }
+        </style>
+    
+        <!-- QA部分样式 -->
+        <style>
+            /* QA容器样式 */
+            .qa-container {
+                background: rgba(255, 255, 255, 0.9);  /* 半透明白色背景 */
+                border-radius: 30px;
+                border: 8px solid #3f77e1;  /* 蓝色边框 */
+                box-shadow: 0 10px 40px rgba(0,0,0,0.15);  /* 阴影效果 */
+                padding: 60px 40px;
+                margin: 60px auto;
+                width: 75%;
+                max-width: 1200px;
+                position: relative;
+                overflow: hidden;
+                min-height: 100vh;  /* 最小高度为视口高度 */
+            }
+        
+            /* QA背景图伪元素 */
+            .qa-container::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: url('./images/background_QA.png');  /* 背景图片 */
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                opacity: 0.24;  /* 半透明 */
+                z-index: 0;  /* 置于底层 */
+            }
+        
+            /* 单个QA项样式 */
+            .qa-item {
+                margin-bottom: 20px;
+                border-bottom: 1px solid #eee;  /* 底部边框 */
+                padding-bottom: 15px;
+                position: relative;
+            }
+            
+            /* 问题样式 */
+            .qa-question {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+                font-size: 1.3em;
+                color: #333;
+                padding: 15px 0;
+                transition: all 0.3s ease;  /* 过渡效果 */
+            }
+            
+            /* 问题悬停效果 */
+            .qa-question:hover {
+                color: #3f77e1;  /* 变为蓝色 */
+            }
+            
+            /* 问题图标样式 */
+            .qa-question i {
+                transition: transform 0.1s ease;  /* 旋转过渡 */
+            }
+            
+            /* 激活状态的问题图标 */
+            .qa-question.active i {
+                transform: rotate(180deg);  /* 向下箭头 */
+            }
+            
+            /* 答案初始状态 */
+            .qa-answer {
+                max-height: 0;
+                overflow: hidden;
+                transition: all 0.3s ease;  /* 高度过渡 */
+                color: #666;
+                line-height: 1.7;
+                padding: 0 20px;
+                opacity: 0;  /* 初始透明 */
+            }
+            
+            /* 显示答案的状态 */
+            .qa-answer.show {
+                max-height: 500px;
+                padding: 0 20px 15px;
+                opacity: 1;  /* 完全不透明 */
+            }
+        </style>
+    
+        <!-- 二维码放大与回到顶部按钮样式 -->
+        <style>
+            /* 二维码模态框样式 */
+            .qr-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);  /* 半透明黑色背景 */
+                z-index: 9999;  /* 最高层级 */
+                cursor: zoom-out;  /* 缩小光标 */
+            }
+            
+            /* 激活状态的模态框 */
+            .qr-modal.active {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            /* 模态框中的图片样式 */
+            .qr-modal img {
+                max-width: 80%;
+                max-height: 80%;
+                border: 5px solid #FFA500;  /* 橙色边框 */
+                border-radius: 15px;
+            }
+    
+            /* 回到顶部按钮样式 */
+            .back-to-top {
+                position: fixed;
+                bottom: 30px;
+                right: -120px;  /* 初始隐藏在右侧 */
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;  /* 圆形 */
+                background: rgba(246, 210, 2, 0.8);  /* 半透明黄色 */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);  /* 贝塞尔曲线过渡 */
+                z-index: 1001;  /* 高层级 */
+                border: 2px solid #000;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);  /* 阴影效果 */
+            }
+            
+            /* 显示状态的回到顶部按钮 */
+            .back-to-top.show {
+                right: 35px;
+                transform: translateX(20px);  /* 轻微弹跳效果 */
+            }
+            
+            /* 按钮图标样式 */
+            .back-to-top i {
+                color: #666;
+                font-size: 1.5em;
+                transition: color 0.3s ease;  /* 颜色过渡 */
+            }
+            
+            /* 按钮悬停时的图标颜色 */
+            .back-to-top:hover i {
+                color: #fff;  /* 白色 */
+            }
+            
+            /* 点击覆盖层样式 */
+            .click-overlay {
+                position: fixed;
+                top: var(--click-y);  /* 动态定位 */
+                left: var(--click-x);
+                width: 250vmax;  /* 超大尺寸确保覆盖 */
+                height: 250vmax;
+                background: rgba(246, 210, 2, 1);  /* 黄色背景 */
+                border-radius: 50%;  /* 圆形 */
+                transform: translate(-50%, -50%);  /* 居中 */
+                transition: all 1.0s ease-in-out;  /* 过渡动画 */
+                pointer-events: none;  /* 不响应鼠标事件 */
+                z-index: 9998;  /* 高层级 */
+                clip-path: circle(0% at 50% 50%);  /* 初始不可见 */
+            }
+    
+            /* 激活状态的覆盖层 */
+            .click-overlay.active {
+                clip-path: circle(200% at 50% 50%);  /* 完全显示 */
+                width: 250vmax;
+                height: 250vmax;
+                transition: all 1.0s cubic-bezier(0.4, 0, 0.2, 1);  /* 贝塞尔曲线过渡 */
+            }
+        </style>
+    </head>
+
+    <body style="background-color:rgb(255,253,245);">
+    <!-- 主体区域 -->
+
+        <!-- 导航栏 -->
+        <nav class="nav-container">
+            <!-- 导航项1 - 介绍部分链接 -->
+            <a class="nav-item nav-link" href="#introduction"> 
+                Introduction
+                <i class="fas fa-info-circle"></i>  <!-- 信息图标 -->
+                <div class="qr-dropdown">  <!-- 二维码下拉菜单 -->
+                    <img src="./images/qrcode_1699620268564.jpg" class="qr-code" alt="QR Code">  <!-- 二维码图片 -->
+                </div>
+            </a>
+
+            <!-- 导航项2 - 关于我们链接 -->
+            <a class="nav-item nav-link" href="#aboutUs"> 
+                About US
+                <i class="fas fa-users"></i>  <!-- 用户组图标 -->
+            </a>
+
+            <!-- 导航项3 - 外部链接到NewThread网站 -->
+            <a class="nav-item newthread" style="font-size: 1.3em;" href="https://campus.new-thread.com">
+                NewThread
+                <i class="fas fa-comment-dots"></i>  <!-- 对话气泡图标 -->
+            </a>
+
+            <!-- 导航项4 - 联系我们链接 -->
+            <a class="nav-item nav-link" href="#contact"> 
+                Contact Us
+                <i class="fas fa-envelope"></i>  <!-- 信封图标 -->
+            </a>
+
+            <!-- 导航项5 - 问答部分链接 -->
+            <a class="nav-item nav-link" href="#qa">
+                Q&A
+                <i class="fas fa-question-circle"></i>  <!-- 问号图标 -->
+            </a>
+        </nav>
+
+        <!-- 背景图 -->
+        <div class="hero-section" style="
+            position: relative;  /* 相对定位 */
+            height: 124vh;  /* 高度为视口高度的124% */
+            background-image: url('./images/background_Homepage.png');  /* 背景图片路径 */
+            background-size: contain;  /* 背景图片自适应 */
+            background-position: center top;  /* 背景图片定位在顶部居中 */
+            background-repeat: no-repeat;  /* 背景不重复 */
+            margin: 0;  /* 外边距为0 */
+        ">
+            <!-- 内容容器 -->
+            <div style="
+                position: absolute;  /* 绝对定位 */
+                top: 15%;  /* 距离顶部15% */
+                left: 50%;  /* 距离左侧50% */
+                transform: translateX(-50%);  /* 水平居中 */
+                text-align: center;  /* 文本居中 */
+            ">
+                <!-- 网站Logo -->
+                <img src="./images/decoration_Geek.png" alt="Logo" class="hero-logo" style="
+                    width: 380px;  /* 固定宽度 */
+                    transition: transform 0.7s ease;  /* 缩放过渡效果 */
+                ">
+            </div>
+        </div>
+
+        <!-- Introduction部分 -->
+        <section id="introduction" style="
+            min-height: 10vh;  /* 最小高度为视口高度的10% */
+            padding: 40px 0;  /* 上下内边距40px */
+            position:relative;  /* 相对定位 */
+            background-image: url('./images/decoration_Transition.png');  /* 背景装饰图片 */
+            background-size: contain;  /* 背景图片自适应 */
+            background-position: center top;  /* 背景图片定位在顶部居中 */
+            background-repeat: no-repeat;  /* 背景不重复 */
+            margin-bottom: -10px;  /* 负外边距用于消除与下方元素的间距 */
+        ">
+            <!-- Introduction文字和背景 -->
+            <div style="
+                display: flex;  /* 弹性布局 */
+                flex-direction: column;  /* 垂直排列 */
+                align-items: center;  /* 水平居中 */
+                justify-content: center;  /* 垂直居中 */
+                height: 100%;  /* 高度100% */
+            ">
+                <div style="
+                    display: flex;  /* 弹性布局 */
+                    align-items: center;  /* 垂直居中 */
+                    gap: 15px;  /* 元素间距15px */
+                    margin-bottom: 80px;  /* 底部外边距80px */
+                ">
+                    <!-- 主标题 -->
+                    <h2 style="margin-top:8%;font-size: 3em;color:rgb(63, 119, 225)">Introduction</h2>
+                    <!-- 信息图标 -->
+                    <i class="fas fa-info-circle" style="margin-top:0%;font-size: 2.8em;color:rgb(63, 119, 225)"></i>
+                </div>
+            </div>
+
+            <!-- 卡片1 -->
+            <div style="
+                display: flex;  /* 弹性布局 */
+                gap: 30px;  /* 元素间距30px */
+                width: 80%;  /* 宽度80% */
+                max-width: 1200px;  /* 最大宽度限制 */
+                min-height: 400px;  /* 最小高度 */
+                background: rgb(225,245,255,0.4);  /* 半透明蓝色背景 */
+                border-radius: 20px;  /* 圆角 */
+                box-shadow: 0 8px 30px rgba(0,0,0,0.2);  /* 阴影效果 */
+                transition: transform 0.6s ease;  /* 悬停动画 */
+                padding: 30px;  /* 内边距 */
+                margin: -28px auto 40px ;  /* 外边距 */
+                border: 4px solid #000;  /* 边框 */
+                box-sizing: border-box;  /* 盒模型 */
+            " class="card-container">
+                <!-- 文字区域 -->
+                <div style="
+                    flex: 1.3;  /* 弹性比例1.3 */
+                    padding-right: 30px;  /* 右内边距 */
+                    border-right: 2px solid #eee;  /* 右侧分隔线 */
+                ">
+                <h2 style="color: #333; margin-bottom: -0.7em; font-size:2.1em;">开发程序猿</h2>
+                <h3 style="color: #2163df;margin-bottom: 1.1em; font-size:2em;">“Stay Hungry，Stay Foolish”</h3>
+                <p style="margin-bottom: 1.2em; line-height: 1.7; color: #666;">
+                    前端：前端开发是创建Web或app视觉界面呈现给用户的过程通过HTML，CSS及JavaScript以及衍生出来的各种技术、框架、解决方案，实现互联网产品的用户界面交互。
+                    </br>
+                    后端：通常也称服务器端开发。不对用户显示,负责处理前端的请求，进行逻辑处理和数据交互。 
+                    </br>
+                    客户端: 移动应用开发是为了小型、无线计算设备编写软件的流程和程序的集合，例如智能手机或平板电脑。
+                    </p>
+                </div>
+
+                <div style="
+                    flex: 0.7;  /* 弹性比例0.7 */
+                    overflow: hidden;  /* 溢出隐藏 */
+                    border-radius: 15px;  /* 圆角 */
+                    transition: transform 0.5s ease;  /* 悬停动画 */
+                    height: 360px;  /* 固定高度 */
+                    align-self: center;  /* 垂直居中 */
+                " class="card-image">
+                    <img src="./images/Geek_Programmer.png" alt="PGR" 
+                        style="
+                            width: 100%;  /* 宽度100% */
+                            height: auto;  /* 高度自适应 */
+                            object-fit: contain;  /* 图片自适应 */
+                            object-position: center;  /* 图片居中 */
+                            transition: transform 0.5s ease;  /* 悬停动画 */
+                        ">
+                </div>
+            </div>
+
+            <!-- 卡片2 -->
+            <div style="
+            display: flex;
+            flex-direction: row-reverse;  /* 反向排列 */
+            gap: 30px;
+            width: 80%;
+            max-width: 1200px;
+            min-height: 400px;
+            background: rgb(255,253,225,0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            transition: transform 0.6s ease;
+            padding: 30px;
+            margin: -15px auto; 
+            border: 4px solid #000;
+            box-sizing: border-box;
+        " class="card-container">
+            <div style="
+                flex: 1.3;
+                padding-left: 30px;
+                border-left: 2px solid #eee;
+            ">
+                <h2 style="color: #333; margin-bottom: -0.7em; font-size:2.1em;">产品经理</h2>
+                <h3 style="color: pink;margin-bottom: 1.1em; font-size:2em;">"好的软件的特征是,明明没用过，但总觉得用过似的。"</h3>
+                <p style="margin-bottom: 1.2em; line-height: 1.7; color: #666;">
+                    PM是针对某一项或是某一类的产品进行规划和管理的人员。 PM需要拥有缜密的产品逻辑思维，研究用户心理，负责产品的整个生命周期。 PM参与产品的UI和交互设计，为设计和开发确定产品原型，能够将产品变得有个性,操作变得舒适简单、自由。 PM需要一定的文档能力和沟通能力，能够在团队合作的过程中跟各个角色进行有效沟通。
+                </p>
+            </div>
+            <div style="
+                flex: 0.7;
+                overflow: hidden;
+                border-radius: 15px;
+                transition: transform 0.5s ease;
+                height: 360px;
+                align-self: center;
+            " class="card-image-rev">
+                <img src="./images/Geek_PM.png" alt="PM" 
+                    style="
+                        width: 100%;
+                        height: auto;
+                        object-fit: contain;
+                        object-position: center;
+                        transition: transform 0.5s ease;
+                    ">
+            </div>
+            </div>
+
+            <!-- 卡片3 -->
+            <div style="
+                display: flex;
+                gap: 30px;
+                width: 80%;
+                max-width: 1200px;
+                min-height: 400px;
+                background: rgb(188,237,233,0.4);
+                border-radius: 20px;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+                transition: transform 0.6s ease;
+                padding: 30px;
+                margin: 40px auto;
+                border: 4px solid #000;
+                box-sizing: border-box; 
+            " class="card-container">
+                <div style="
+                    flex: 1.3;
+                    padding-right: 30px;
+                    border-right: 2px solid #eee;
+                ">
+                <h2 style="color: #333; margin-bottom: -0.7em; font-size:2.1em;">游戏开发</h2>
+                <h3 style="color: rgb(32,255,252);margin-bottom: 1.1em; font-size:2em;">"TECH OTAKUS SAVE THE WORLD"</h3>
+                <p style="margin-bottom: 1.2em; line-height: 1.7; color: #666;">
+                    对游戏开发的热爱和追求，使我们相聚于此。 涉及计算机图形学的学习，我们使用物理模拟引擎Unity开发我们所追求的世界，一个故事，一个角色，在我们的世界里改变现实，创造新的可能，我们参与，我们改变，我们创造...
+                    </p>
+                </div>
+
+                <div style="
+                    flex: 0.7;
+                    overflow: hidden;
+                    border-radius: 15px;
+                    transition: transform 0.5s ease;
+                    height: 360px;
+                    align-self: center;
+                " class="card-image">
+                    <img src="./images/Geek_Game.png" alt="GM" 
+                        style="
+                            width: 100%;
+                            height: auto;
+                            object-fit: contain;
+                            object-position: center;
+                            transition: transform 0.5s ease;
+                        ">
+                </div>
+            </div>
+
+            <!-- 卡片4 -->
+            <div style="
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 30px;
+            width: 80%;
+            max-width: 1200px;
+            min-height: 400px;
+            background: rgb(255,252,243,0.3);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            transition: transform 0.6s ease;
+            padding: 30px;
+            margin: -15px auto 80px; 
+            border: 4px solid #000;
+            box-sizing: border-box;
+        " class="card-container">
+                <div style="
+                    flex: 1.3;
+                    padding-left: 30px;  
+                    border-left: 2px solid #eee; 
+                ">
+                    <h2 style="color: #333; margin-bottom: -0.7em; font-size:2.1em;">安全</h2>
+                    <h3 style="color: purple;margin-bottom: 1.1em; font-size:2em;">"路漫漫其修远兮，非大毅力者不能"</h3>
+                    <p style="margin-bottom: 1.2em; line-height: 1.7; color: #666;">
+                        我们主要学习Web安全和二进制安全。在Web安全中我们将学习和实践Web漏洞挖掘技术，也将探索和讨论Web安全实践的方法。在二进制安全中我们专注于分析和防御与计算机程序、系统相关的威胁，同时实践漏洞分析和修补。耐心和钻研缺一不可。
+                    </p>
+                </div>
+
+                <div style="
+                    flex: 0.7;
+                    overflow: hidden;
+                    border-radius: 15px;
+                    transition: transform 0.5s ease;
+                    height: 360px;
+                    align-self: center;
+                " class="card-image-rev">
+                    <img src="./images/Geek_security.png" alt="PM" 
+                        style="
+                            width: 100%;
+                            height: auto;
+                            object-fit: contain;
+                            object-position: center;
+                            transition: transform 0.5s ease;
+                        ">
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- AboutUs部分 -->
+        <section id="aboutUs" style="padding: 60px 20px; position: relative;">
+            <!-- 底框容器 -->
+            <div style="
+                position: relative;
+                min-height: 600px;
+                background: rgba(255, 255, 255, 0.7);
+                border-radius: 30px;
+                border: 8px solid #6666669f;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+                padding: 60px 40px;
+                margin: 0 auto;
+                width: 75%;
+                max-width: 1200px;
+            ">
+                <!-- 放大后的装饰元素 -->
+                <img src="./images/decoration_Decoration(2).png" alt="decoration" style="
+                    position: absolute;
+                    width: 310px;
+                    top: -25px;
+                    left: -55px;
+                    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2)); /* 阴影效果 */
+                ">
+                <img src="./images/decoration_Decoration.png" alt="decoration" style="
+                    position: absolute;
+                    width: 310px;
+                    top: -25px;
+                    right: -55px;
+                    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+                ">
+                <img src="./images/decoration_Decoration(1).png" alt="decoration" style="
+                    position: absolute;
+                    width: 310px;
+                    bottom: -55px;
+                    left: -55px;
+                    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+                ">
+                <img src="./images/decoration_Decoration(3).png" alt="decoration" style="
+                    position: absolute;
+                    width: 310px;
+                    bottom: -55px;
+                    right: -55px;
+                    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+                ">
+                <img src="./images/decoration_Butterfly.png" class="decoration-butterfly" alt="decoration" style="
+                    position: absolute;
+                    width: 110px;
+                    bottom: -5px;
+                    right: 67px;
+                ">
+        
+                <!-- 标题区域 -->
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 15px;
+                    margin-bottom: 50px;
+                ">
+                    <h2 style="font-size: 2.8em; color: #333; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                        About Us
+                        <i class="fas fa-users" style="margin-top:0%;font-size: 1em;color:rgb(63, 119, 225)"></i>
+                    </h2>
+                </div>
+        
+                <!-- 横向卡片容器 -->
+                <div style="
+                    display: flex;
+                    justify-content: space-around; /* 卡片均匀分布 */
+                    gap: 10px;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    flex-wrap: wrap; /* 允许换行 */
+                ">
+                    <!-- 卡片1 -->
+                    <div class="about-card" style="
+                        background: linear-gradient(135deg, rgba(246, 210, 2, 0.1) 0%, rgba(255,255,255,0.3) 100%); /* 渐变背景 */
+                        border-radius: 20px;
+                        padding: 30px;
+                        border: 2px solid #eee;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        transition: transform 0.3s ease; /* 悬停动画 */
+                        width: 130px;
+                        min-height: 350px;
+                        display: flex;
+                        flex-direction: column;
+                        animation: float 8s ease-in-out infinite; /* 浮动动画 */
+                    ">
+                        <div style="
+                            flex: 1;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            gap: 25px;
+                        ">
+                            <img src="./images/about_Speech.png" alt="mission" style="
+                                width: 127.5px;
+                                height: 127.5px;
+                                object-fit: contain;
+                            ">
+                            <div style="text-align: center;">
+                                <p style="margin: 10px -10px; line-height: 2.0; color: #666; font-size: 1.1em;">
+                                    每周我们会举行一次技术例会，用来汇报我们的学习内容，供成员之间交流学习。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- 卡片2 -->
+                    <div class="about-card" style="
+                        background: linear-gradient(135deg, rgba(63, 119, 225, 0.1) 0%, rgba(255,255,255,0.3) 100%);
+                        border-radius: 20px;
+                        padding: 30px;
+                        border: 2px solid #eee;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        transition: transform 0.3s ease;
+                        width: 130px;
+                        min-height: 350px;
+                        display: flex;
+                        flex-direction: column;
+                        animation: float 8s ease-in-out infinite;
+                    ">
+                        <div style="
+                            flex: 1;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            gap: 25px;
+                        ">
+                            <img src="./images/about_Diversity.png" alt="mission" style="
+                            width: 127.5px;
+                            height: 127.5px;
+                            object-fit: contain;
+                        ">
+                            <div style="text-align: center;">
+                                <p style="margin: 5px -10px; line-height: 1.8; color: #666; font-size: 1.1em;">
+                                    多元化是我们的特色。在这里，你可以拥有多种方向选择，前后端、安全、AI、产品/设计、游戏等。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- 卡片3 -->
+                    <div class="about-card" style="
+                        background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255,255,255,0.3) 100%);
+                        border-radius: 20px;
+                        padding: 30px;
+                        border: 2px solid #eee;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        transition: transform 0.3s ease;
+                        width: 130px;
+                        min-height: 350px;
+                        display: flex;
+                        flex-direction: column;
+                        animation: float 8s ease-in-out infinite;
+                    ">
+                        <div style="
+                            flex: 1;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            gap: 25px;
+                        ">
+                                <img src="./images/about_Time.png" alt="mission" style="
+                                width: 127.5px;
+                                height: 127.5px;
+                                object-fit: contain;
+                            ">
+                            <div style="text-align: center;">
+                                <p style="margin: 10px -10px ; line-height: 2.0; color: #666; font-size: 1.1em;">
+                                    耐心、毅力是我们必备的品质，每周我们会至少花30小时在实验室中。以保证技术的精进。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ContactUs部分 -->
+        <section id="contact" style="
+            min-height: 100vh;
+            padding: 60px 20px;
+            position: relative;
+            background-color: rgba(255, 253, 245, 0.7);
+        ">
+            <!-- 主卡片容器 -->
+            <div style="
+                position: relative;
+                min-height: 500px;
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 30px;
+                border: 8px solid #2e8b57;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+                padding: 60px 40px;
+                margin: 0 auto;
+                width: 75%;
+                max-width: 1200px;
+            ">
+                <!-- 5个装饰元素 -->
+                <img src="./images/decoration_TreeWithSometing.png" alt="decoration" style="
+                    position: absolute;
+                    width: 180px;
+                    top: -45px;
+                    left: 0px;
+                    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+                ">
+                <img src="./images/decoration_Tree.png" alt="decoration" style="
+                    position: absolute;
+                    width: 180px;
+                    top: 5px;
+                    right: -55px;
+                    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+                ">
+                <img src="./images/decoration_Ladybug.png" alt="decoration" style="
+                    position: absolute;
+                    width: 80px;
+                    bottom: -25px;
+                    left: -20px;
+                    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+                ">
+                <img src="./images/decoration_Chameleon.png" alt="decoration" style="
+                    position: absolute;
+                    width: 440px;
+                    bottom: -45px;
+                    right: 95px;
+                    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+                ">
+                <img src="./images/decoration_Leaves.png" class="decoration-butterfly" alt="decoration" style="
+                    position: absolute;
+                    width: 50px;
+                    top: 70px;
+                    left: 260px;
+                ">
+                
+                <!-- 标题区域 -->
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 15px;
+                    margin-bottom: 50px;
+                ">
+                    <h2 style="font-size: 2.8em; color: #2e8b57; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                        Contact Us
+                        <i class="fas fa-envelope" style="margin-left: 15px; font-size: 0.9em;"></i>
+                    </h2>
+                    <h3 style="font-size: 1.6em; color: #666; max-width: 800px; text-align: center; line-height: 1.6;margin-bottom:-17.5px;">
+                        •热爱计算机，具有geek精神，喜欢DIY，动手能力较强
+                    </h3>
+                    <h3 style="font-size: 1.6em; color: #666; max-width: 800px; text-align: center; line-height: 1.6;margin-bottom:-17.5px;">
+                        •有编程/算法/硬件基础为佳(有作品可附上)
+                    </h3>
+                    <h3 style="font-size: 1.6em; color: #666; max-width: 800px; text-align: center; line-height: 1.6;margin-bottom:17.5px;">
+                        •有足够的空余时间，热爱思考，对事物有自己的见解
+                    </h3>
+                    <p style="font-size: 1.2em; color: rgba(53, 48, 48, 0.7); padding:0px 140px; text-align: center; line-height: 1.8;margin-bottom:-30px;">
+                        ps:非新思路统招只有通过发送邮件自我介绍后，收到邮件回执后才会被允许进群,在读学生, 都可邮件到newthread_geek@outlook.com报名加入.(信中需备注个人基本信息以及意向方向,此招新活动为长期招新)
+                    </p>
+                </div>
+                
+                <!-- 按钮区域 -->
+                <div style="
+                    display: flex;
+                    justify-content: center;
+                    gap: 30px;
+                    margin-top: 80px;
+                    flex-wrap: wrap;
+                    position: relative;  /* 添加定位上下文 */
+                    z-index: 2;
+                ">
+                    <!-- QQ Group 按钮 -->
+                    <a class= "contact-button" href="#contact" onclick="animateIcon(event, this)" style="
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        background: #2e8b57;
+                        color: white;
+                        padding: 12px 25px;
+                        border-radius: 30px;
+                        text-decoration: none;
+                        font-size: 1.1em;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 10px rgba(46, 139, 87, 0.3);
+                    ">
+                        <i class="fab fa-qq" style="font-size: 1.3em;"></i>
+                        QQ Group
+                    </a>
+                    
+                    <!-- Email 按钮 -->
+                    <a class= "contact-button" href="mailto:newthread_geek@outlook.com" onclick="animateIcon(event, this);copyEmail(event, this)" style="
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        background: #2e8b57;
+                        color: white;
+                        padding: 12px 25px;
+                        border-radius: 30px;
+                        text-decoration: none;
+                        font-size: 1.1em;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 10px rgba(46, 139, 87, 0.3);
+                    ">
+                        <i class="fas fa-envelope" style="font-size: 1.3em;"></i>
+                        E-mail
+                    </a>
+                    
+                    <!-- Github 按钮 -->
+                    <a class="contact-button" href="https://github.com/687jsassd" target="_blank" onclick="animateIcon(event, this)" style="
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        background: #2e8b57;
+                        color: white;
+                        padding: 12px 25px;
+                        border-radius: 30px;
+                        text-decoration: none;
+                        font-size: 1.1em;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 10px rgba(46, 139, 87, 0.3);
+                    ">
+                        <i class="fab fa-github" style="font-size: 1.3em;"></i>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- QA部分 -->
+        <section id="qa" style="min-height: 100vh; padding: 10px 20px; background-color: rgba(255, 253, 245, 0.7);">
+            <div class="qa-container">
+                <!-- 标题区域 -->
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 15px;
+                    margin-bottom: 50px;
+                ">
+                    <h2 style="font-size: 2.8em; color: #3f77e1; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+                        Q&A
+                        <i class="fas fa-question-circle" style="margin-left: 15px; font-size: 0.9em;"></i>
+                    </h2>
+                    <p style="font-size: 1.2em; color: #666; max-width: 800px; text-align: center; line-height: 1.6;">
+                        常见问题解答
+                    </p>
+                </div>
+                
+                <!-- Q&A列表 -->
+                <div class="qa-item">
+                    <div class="qa-question">
+                        <span>1.什么是Geek(极客)？Geek精神又是什么？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="qa-answer">
+                        拥有好奇之心，改变之力，爱钻研，能折腾。
+                    </div>
+                </div>
+                
+                <div class="qa-item">
+                    <div class="qa-question">
+                        <span>2.招新是安排在什么时间？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="qa-answer">
+                        按照惯例，正式招新时间是在9月下旬~10月上旬，不过今年会有一些改动，笔试地 点一般在9号教学楼。 如果想要了解我们，可以加入我们的QQ群，招新具体的安排/变动会在招新群通知。
+                    </div>
+                </div>
+                
+                <div class="qa-item">
+                    <div class="qa-question">
+                        <span>3.我们有考核吗？考核流程是怎样的呀？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="qa-answer">
+                        嗯...我们一共有一轮笔试和两轮面试。权衡技术、经验和学习能力，第一轮是一些视野性的题目，淘汰率并不高。第二轮单独面试， 根据你的笔试提出技术相关的问题、兴趣爱好、个人看法。最后一轮群面，首先问及时间分 配上的问题，其次也会向你提出各种奇怪的问题。这一轮中许多题目其实并不难，也无标准答案，重在考察同学们在压力下的逻辑思维。全部通过成为预备成员啦。
+                    </div>
+                </div>
+                
+                <div class="qa-item">
+                    <div class="qa-question">
+                        <span>4.考核是怎样的形式？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="qa-answer">
+                        在考核期间每人会拥有一位'长者'带你入门，学习技术与知识，交流经验与想法。完成每周的新人任务后再进行一次考核筛选 后就可以成为Geek组正式成员啦！在考核期必须满足每周30个小时在实验室哦,所以考核期也不可以懈怠哦！
+                    </div>
+                </div>
+                
+                <div class="qa-item">
+                    <div class="qa-question">
+                        <span>5.进入Geek组之后都有什么福利呢？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="qa-answer">
+                        一对一的新人指引，每一个成员都有会一个mentor, 带你初入门槛，与你一同成长，组内管理较宽松,在尊重其他人的前提下可以尽情发挥自己的个性。 打破平淡，与同样疯狂的人把疯狂的idea实现，磨砺耐性、培养思维、成就梦想。Lab设备/网络资源充足，闲暇之余也有组织活动。更有许多的故事等你来听~
+                    </div>
+                </div>
+                
+                <div class="qa-item">
+                    <div class="qa-question">
+                        <span>6.进入团队会影响我的日常学习吗？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="qa-answer">
+                        你要知道大学是一个可以自由安排自己学习生活的地方。如果你想在上课之余充实自己、激励自己，最好的方法就是和比自己更优秀的人在一起。团队不缺优秀的 人，而我们也期待同样优秀的你，让我们一起前进！小组里也有不少保研, 考研的前辈们, 大部分都能找到一个平衡点, 而且团队的经历对你日后读研, 工作都大有裨益。
+                    </div>
+                </div>
+                
+                <div class="qa-item">
+                    <div class="qa-question">
+                        <span>7.老师以及学长学姐们的期望是什么?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="qa-answer">
+                        我们希望你有很强的自学能力，同时关注新事物、新技术，喜欢挑战，逻辑性强，善于和各种文化的人合作.“每个人都可以做自己想做的事情，每个人的方向不一样。 如果你想做产品或有不错的 idea，那么就可以找志同道合的人一起合作。”
+                    </div>
+                </div>
+                <div class="qa-item">
+                    <div class="qa-question">
+                        <span>8.这个网页处处都有小用心，你找到了吗?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="qa-answer">
+                        导航栏透明度，导航栏Introduction二维码放大，返回顶部按钮逻辑和动画，Introduction的卡片背景色和偏转方向，AboutUs的卡片拖拽和动画，ContactUs的点击按钮的动画，Q&A的文字自动变色，以及这一条QA。啦啦啦啦~~~
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!--底部备案信息区域 -->
+        <footer style="
+            border-top: 2px solid #ddd;
+            background-color: #f5f5f5;
+            padding: 5px 0;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        ">
+            <div style="margin: 0 auto;">
+                <p>© 2025 <span style="color: #2e8b57;">NewThread Geek Group</span> & <span style="color: #3f77e1;">687jsassd</span> . All Rights Reserved.</p>
+                <p>备案号：有待补充哦~</p>
+            </div>
+        </footer> 
+
+    <!-- 脚本区域 -->
+    
+        <!-- AboutUs浮动动画和拖拽脚本 -->
+        <script>
+            // 为所有卡片设置随机浮动动画
+            document.querySelectorAll('.about-card').forEach(card => {
+                const duration = 8 + Math.random() * 4;  // 随机动画持续时间(8-12秒)
+                const delay = Math.random() * 2;         // 随机延迟开始时间(0-2秒)
+                card.style.animation = `float ${duration}s ease-in-out infinite ${delay}s`;
+            });
+        
+            // 拖拽相关变量
+            let currentDraggingCard = null;  // 当前被拖拽的卡片
+            let startPos = { x: 0, y: 0 };   // 鼠标起始位置
+            let currentTransform = { x: 0, y: 0 };  // 当前变换值
+
+            // 为每张卡片添加鼠标按下事件
+            document.querySelectorAll('.about-card').forEach(card => {
+                card.addEventListener('mousedown', (e) => {
+                    e.preventDefault();  // 阻止默认行为
+                    currentDraggingCard = card;  // 设置当前拖拽卡片
+                    const rect = card.getBoundingClientRect();  // 获取卡片位置信息
+                    
+                    // 获取卡片当前transform矩阵
+                    const transform = window.getComputedStyle(card).transform;
+                    let matrix = [1, 0, 0, 1, 0, 0];  // 默认单位矩阵
+                    if (transform !== 'none') {
+                        matrix = transform.match(/matrix\((.+)\)/)[1].split(',').map(Number);
+                    }
+                    
+                    // 计算鼠标相对于卡片transform的起始位置
+                    startPos = {
+                        x: e.clientX - matrix[4],  // matrix[4]是x轴平移值
+                        y: e.clientY - matrix[5]   // matrix[5]是y轴平移值
+                    };
+                    
+                    // 拖拽时停止浮动动画
+                    card.style.animation = 'none';
+                    card.style.cursor = 'grabbing';  // 改变鼠标样式
+                    card.style.willChange = 'transform';  // 优化性能
+                });
+            });
+
+            // 鼠标移动事件处理
+            document.addEventListener('mousemove', (e) => {
+                if (!currentDraggingCard) return;  // 如果没有拖拽卡片则返回
+                
+                // 计算鼠标移动距离
+                const deltaX = e.clientX - startPos.x;
+                const deltaY = e.clientY - startPos.y;
+                
+                // 应用拖拽位移
+                currentDraggingCard.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+            });
+
+            // 鼠标释放事件处理
+            document.addEventListener('mouseup', () => {
+                if (!currentDraggingCard) return;  // 如果没有拖拽卡片则返回
+                
+                // 恢复卡片状态
+                currentDraggingCard.style.cursor = 'grab';  // 恢复鼠标样式
+                currentDraggingCard.style.willChange = 'auto';  // 恢复性能优化设置
+                currentDraggingCard = null;  // 清除当前拖拽卡片
+            });
+        </script>
+
+        <!-- ContactUs信封动画脚本 -->
+        <script>
+            // 信封图标动画函数
+            function animateIcon(event, button) {
+                event.preventDefault();  // 阻止默认的链接跳转行为
+                
+                // 获取标题中的信封图标元素
+                const titleIcon = document.querySelector('#contact h2 i.fa-envelope');
+                if (!titleIcon) return;  // 如果找不到图标则直接返回
+                
+                // 创建动画图标元素
+                const animatedIcon = document.createElement('i');
+                // 设置图标类名(Font Awesome)
+                animatedIcon.className = 'fas fa-envelope email-icon-animation'; 
+                // 设置图标颜色(使用标题图标的颜色或默认颜色)
+                animatedIcon.style.color = titleIcon.style.color || '#2e8b57'; 
+                
+                // 获取标题图标和按钮的位置信息
+                const titleRect = titleIcon.getBoundingClientRect();
+                const buttonRect = button.getBoundingClientRect();
+                
+                // 计算按钮到标题图标的距离
+                const deltaX = buttonRect.left - titleRect.left;
+                const deltaY = buttonRect.top - titleRect.top;
+                
+                // 设置动画图标的初始位置(相对于按钮)
+                animatedIcon.style.left = `${titleRect.left - buttonRect.left}px`;
+                animatedIcon.style.top = `${titleRect.top - buttonRect.top}px`;
+                
+                // 将动画图标添加到按钮中
+                button.appendChild(animatedIcon);
+                
+                // 延迟10ms后开始移动动画(确保DOM更新)
+                setTimeout(() => {
+                    // 设置CSS变量定义目标位置
+                    animatedIcon.style.setProperty('--target-x', `${deltaX}px`);
+                    animatedIcon.style.setProperty('--target-y', `${deltaY}px`);
+                    // 添加移动动画类
+                    animatedIcon.classList.add('email-icon-moving');
+                }, 10);
+                
+                // 800ms后执行跳转并移除动画图标
+                setTimeout(() => {
+                    window.location.href = button.href;  // 跳转到链接地址
+                    animatedIcon.remove();  // 移除动画图标
+                }, 800);
+            }
+        </script>
+
+        <!-- ContactUs复制邮箱到剪贴板脚本 -->
+        <script>
+            function copyEmail(event, button) {
+                event.preventDefault();
+                const email = 'newthread_geek@outlook.com';
+                
+                // 复制到剪贴板
+                navigator.clipboard.writeText(email).then(() => {
+                    // 创建提示元素
+                    const tooltip = document.createElement('div');
+                    tooltip.textContent = '邮箱已复制!';
+                    tooltip.style.position = 'absolute';
+                    tooltip.style.backgroundColor = '#333';
+                    tooltip.style.color = '#fff';
+                    tooltip.style.padding = '5px 10px';
+                    tooltip.style.borderRadius = '5px';
+                    tooltip.style.fontSize = '0.8em';
+                    tooltip.style.top = '-40px';
+                    tooltip.style.left = '50%';
+                    tooltip.style.transform = 'translateX(-50%)';
+                    tooltip.style.zIndex = '100';
+                    
+                    button.style.position = 'relative';
+                    button.appendChild(tooltip);
+                    
+                    // 3秒后移除提示
+                    setTimeout(() => {
+                        tooltip.remove();
+                        // 执行原来的动画效果
+                        animateIcon(event, button);
+                        // 打开邮件客户端
+                        window.location.href = `mailto:${email}`;
+                    }, 1000);
+                }).catch(err => {
+                    console.error('复制失败:', err);
+                    // 如果复制失败，直接执行原来的动画和跳转
+                    animateIcon(event, button);
+                    window.location.href = `mailto:${email}`;
+                });
+            }
+        </script>
+        
+        <!-- QA展开收起脚本 -->
+        <script>
+            // 获取所有QA问题元素
+            document.querySelectorAll('.qa-question').forEach(question => {
+                // 为每个问题添加点击事件监听器
+                question.addEventListener('click', () => {
+                    // 获取对应的答案元素(下一个兄弟元素)
+                    const answer = question.nextElementSibling;
+                    
+                    // 切换问题的active类(用于控制箭头图标旋转)
+                    question.classList.toggle('active');
+                    
+                    // 切换答案的show类(用于控制答案显示/隐藏)
+                    answer.classList.toggle('show');
+                });
+            });
+        </script>
+
+        <!-- 平滑滚动脚本 -->
+        <script>
+            // 获取所有导航链接元素
+            document.querySelectorAll('.nav-link').forEach(link => {
+                // 为每个链接添加点击事件监听器
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); // 阻止默认的跳转行为
+                    
+                    // 获取链接的href属性值(目标元素的ID)
+                    const targetId = this.getAttribute('href');
+                    // 根据ID查找目标元素
+                    const targetElement = document.querySelector(targetId);
+                    
+                    // 如果找到目标元素
+                    if (targetElement) {
+                        // 使用平滑滚动到目标元素位置
+                        window.scrollTo({
+                            top: targetElement.offsetTop, // 目标元素的顶部位置
+                            behavior: 'smooth' // 平滑滚动效果
+                        });
+                        
+                        // 更新浏览器历史记录，不刷新页面
+                        history.pushState(null, null, targetId);
+                    }
+                });
+            });
+        </script>
+
+        <!-- 二维码放大脚本 -->
+        <script>
+            // 创建二维码放大模态框
+            const modal = document.createElement('div');
+            modal.className = 'qr-modal';
+            modal.innerHTML = '<img src="" alt="Enlarged QR Code">';
+            document.body.appendChild(modal);
+
+            // 为所有二维码添加点击事件
+            document.querySelectorAll('.qr-code').forEach(qr => {
+                qr.addEventListener('click', function(e) {
+                    e.stopPropagation(); // 阻止事件冒泡
+                    e.preventDefault(); // 阻止默认行为
+                    modal.classList.add('active'); // 显示模态框
+                    modal.querySelector('img').src = this.src; // 设置放大图片源
+                });
+            });
+        
+            // 点击模态框关闭
+            modal.addEventListener('click', () => {
+                modal.classList.remove('active'); // 隐藏模态框
+            });
+        
+            // 创建返回顶部按钮
+            const backToTopBtn = document.createElement('a');
+            backToTopBtn.className = 'back-to-top';
+            backToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+            document.body.appendChild(backToTopBtn);
+        
+            // 滚动事件处理
+            let isScrolling;
+            window.addEventListener('scroll', () => {
+                // 计算滚动百分比
+                const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (window.scrollY / scrollHeight) * 100;
+                
+                cancelAnimationFrame(isScrolling); // 取消之前的动画帧
+                
+                // 使用requestAnimationFrame优化性能
+                isScrolling = requestAnimationFrame(() => {
+                    // 根据滚动位置显示/隐藏返回顶部按钮
+                    if (scrollPercent > 33) {
+                        backToTopBtn.classList.add('show');
+                    } else {
+                        backToTopBtn.classList.remove('show');
+                    }
+                });
+            });
+        </script>
+
+        <!--返回顶部按钮脚本-->
+        <script>
+            // 返回顶部按钮点击事件
+            backToTopBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 获取按钮位置
+                const rect = backToTopBtn.getBoundingClientRect();
+                // 创建点击动画覆盖层
+                const overlay = document.createElement('div');
+                overlay.className = 'click-overlay';
+                
+                // 设置覆盖层起始位置(点击点)
+                overlay.style.setProperty('--click-x', `${rect.left + rect.width/2}px`);
+                overlay.style.setProperty('--click-y', `${rect.top + rect.height/2}px`);
+                
+                document.body.appendChild(overlay);
+                
+                // 动画序列
+                setTimeout(() => {
+                    overlay.classList.add('active'); // 开始扩散动画
+                    
+                    setTimeout(() => {
+                        overlay.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                        overlay.style.clipPath = 'circle(0% at 50% 50%)'; // 收缩动画
+                        
+                        // 返回顶部
+                        requestAnimationFrame(() => {
+                            window.scrollTo({ top: 0, behavior: 'instant' });
+                        });
+                        
+                        // 移除覆盖层
+                        setTimeout(() => overlay.remove(), 600);
+                    }, 800);
+                }, 50);
+            });
+        </script>
+
+    </body>
+
+</html>
