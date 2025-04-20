@@ -1,0 +1,120 @@
+<!-- 欢迎回到 按钮的进化 -->
+<!-- 只需要添加一行代码，按钮就随时知道自己所在的位置了！ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        
+        <!-- CSS 样式部分 -->
+        <style>
+            /* 消息容器基础样式 */
+            .message-box {
+                display: none;  /* 初始隐藏消息容器 */
+                color: green;   /* 消息文字颜色 */
+                margin-top: 15px;
+                padding: 10px;
+                border: 1px solid #ccc; /* 添加边框增强可视性 */
+            }
+            
+            /* 可拖动按钮样式 */
+            #movableBtn {
+               background-color: greenyellow;
+               color: red;
+               padding: 15px 30px;        /* 内边距 */
+               border: 2px solid black;  /* 边框 */          
+               cursor: move;              
+               position: absolute;        
+           }
+
+            /* 隐藏的下一课入口 */
+            #nextLesson {
+                display: none;            /* 初始隐藏 */
+                margin-top: 20px;         /* 上边距 */
+                background: #f0f0f0;     /* 背景色 */
+                padding: 15px;           /* 内边距 */
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 主标题 -->
+        <h1 style="color: red;"> 按钮的进化 </h1>
+        <p> Button knows its position all the time: 它不是路痴 </p>
+
+        <!-- 可拖动按钮 -->
+        <button id="movableBtn" onclick="showPosition(event)">
+            我更聪明，啥时候都知道我现在在什么位置！<br>拖着我逛一下如何呢?
+        </button>
+
+        <!-- 坐标显示区域 -->
+        <div id="positionInfo" class="message-box"></div>
+
+        <!-- 隐藏的下一课入口 -->
+        <div id="nextLesson" class="message-box">
+            <button onclick="">下一步</button>
+        </div>
+
+        <script>
+            // 拖动功能核心逻辑
+            let isDragging = false;   // 拖动状态标识
+            let startX, startY;       // 鼠标起始坐标
+            let initialX, initialY;    // 按钮初始位置
+
+            // 获取按钮元素
+            const btn = document.getElementById('movableBtn');
+            
+            // 鼠标按下事件（开始拖动）
+            btn.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                // 记录初始位置
+                startX = e.clientX;   // 鼠标X坐标
+                startY = e.clientY;   // 鼠标Y坐标
+                initialX = btn.offsetLeft;  // 按钮左偏移量
+                initialY = btn.offsetTop;   // 按钮上偏移量
+                
+                // 添加移动和释放监听
+                document.addEventListener('mousemove', onMouseMove);
+                document.addEventListener('mouseup', onMouseUp);
+            });
+
+            // 鼠标移动处理函数
+            function onMouseMove(e) {
+                if (!isDragging) return;
+                
+                // 计算新位置
+                const newX = initialX + (e.clientX - startX);
+                const newY = initialY + (e.clientY - startY);
+                
+                // 应用新位置
+                btn.style.left = newX + 'px';  // 设置左定位
+                btn.style.top = newY + 'px';   // 设置上定位
+                showPosition(e);
+            }
+
+            // 鼠标释放处理函数
+            function onMouseUp() {
+                isDragging = false;
+                // 移除临时事件监听
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
+
+            // 点击显示坐标和检查位置
+            function showPosition(e) {
+                // 获取当前位置
+                const x = parseInt(btn.style.left) || 0;  // 水平坐标
+                const y = parseInt(btn.style.top) || 0;   // 垂直坐标
+                
+                // 更新坐标显示
+                const infoDiv = document.getElementById('positionInfo');
+                infoDiv.innerHTML = `当前坐标：X=${x}px, Y=${y}px`;
+                infoDiv.style.display = 'block';  // 显示消息容器
+
+                // 检查是否在触发区域（示例：X和Y都大于200px）
+                if (x > 200 && y > 200) {
+                    document.getElementById('nextLesson').style.display = 'block';
+                    infoDiv.innerHTML += '<br>发现隐藏区域！';
+                }
+            }
+        </script>
+    </body>
+</html>

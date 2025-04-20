@@ -18,13 +18,19 @@
             
             /* 可拖动按钮样式 */
             #movableBtn {
-                background-color: yellow;  /* 按钮背景色 */
-                color: blue;               /* 按钮文字颜色 */
-                padding: 15px 30px;        /* 内边距 */
-                border: none;              /* 去除默认边框 */
-                cursor: move;              /* 鼠标显示移动光标 */
-                position: absolute;        /* 启用绝对定位（关键属性） */
-            }
+               background-color: yellow;
+               color: blue;
+               padding: 15px 30px;        /* 内边距 */
+               /* 尺寸计算逻辑：*/
+               /* 宽度 = 内容宽度 + 左右padding（30px*2）*/
+               /* 高度 = 内容高度 + 上下padding（15px*2）*/
+               border: none;              
+               cursor: move;              
+               position: absolute;        
+               /* 隐式尺寸继承自：*/
+               /* 1. 按钮文字内容长度（"拖着我逛一下如何呢"）*/
+               /* 2. 浏览器默认字体大小（通常16px）*/
+           }
 
             /* 隐藏的下一课入口 */
             #nextLesson {
@@ -70,7 +76,7 @@
 
         <!-- 隐藏的下一课入口 -->
         <div id="nextLesson" class="message-box">
-            <p>还在制作呢！过会儿再来吧。</p>
+            <button onclick="location.href='3.1-Button_knows_its_position_all_the_time.html'">下一步</button>
         </div>
 
         <script>
@@ -240,7 +246,10 @@ addEventListener 的优势：
    - 作用：元素内容与边框的间距
    - 常见值：10px / 5% / 1em
    - 简写：padding: 上 右 下 左
-
+   一个值：padding: 15px; 表示上、右、下、左内边距均为15px。
+   两个值：padding: 10px 20px; 表示上下内边距为10px，左右内边距为20px。
+   三个值：padding: 10px 20px 30px; 表示上内边距为10px，左右内边距为20px，下内边距为30px。
+   四个值：padding: 10px 20px 30px 40px; 表示上内边距为10px，右内边距为20px，下内边距为30px，左内边距为40px，按照顺时针方向依次设置。
 2. border：
    - 作用：元素边框样式
    - 常见设置：
@@ -269,6 +278,7 @@ addEventListener 的优势：
     请你按照上面的提示和知识实现：
     3.1 一个在拖动时就会实时更新坐标的按钮（不用放下或者点击就会显示）
     3.2 一个会自己移动的按钮（不点击，会自己移动）
-
+    Challenge1: 按钮的旅途:
+    按钮会自己移动并反弹，玩家可以自由改变页面尺寸或者滑动屏幕，让按钮到达指定区域则得一分，然后区域重选，最终看玩家60秒内拿到多少分。区域大小会随着玩家当前的页面大小而改变。
     然后我们将学习：
-    3-Button's_new_clothes.html 按钮的新衣服 -->
+    4-Button's_new_clothes.html 按钮的新衣服 -->

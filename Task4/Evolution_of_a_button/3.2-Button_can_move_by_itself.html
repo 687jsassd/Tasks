@@ -1,0 +1,98 @@
+<!-- 欢迎回到 按钮的进化 -->
+<!-- 现在，我们让按钮自己移动！ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        
+        <!-- CSS 样式部分 -->
+        <style>
+            /* 消息容器基础样式 */
+            .message-box {
+                display: none;  /* 初始隐藏消息容器 */
+                color: green;   /* 消息文字颜色 */
+                margin-top: 15px;
+                padding: 10px;
+                border: 1px solid #ccc; /* 添加边框增强可视性 */
+            }
+            
+            /* 可拖动按钮样式 */
+            #movableBtn {
+               background-color: greenyellow;
+               color: red;
+               padding: 15px 30px;        /* 内边距 */
+               border: 2px solid black;  /* 边框 */          
+               cursor: move;              
+               position: absolute;        
+           }
+
+            /* 隐藏的下一课入口 */
+            #nextLesson {
+                display: none;            /* 初始隐藏 */
+                margin-top: 20px;         /* 上边距 */
+                background: #f0f0f0;     /* 背景色 */
+                padding: 15px;           /* 内边距 */
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 主标题 -->
+        <h1 style="color: red;"> 按钮的进化 </h1>
+        <p> Button can move by itself: 它有腿 </p>
+
+        <!-- 可拖动按钮 -->
+        <button id="movableBtn" onclick="showPosition(event)">
+            我会自己移动了！！
+        </button>
+
+        <!-- 坐标显示区域 -->
+        <div id="positionInfo" class="message-box"></div>
+
+        <!-- 隐藏的下一课入口 -->
+        <div id="nextLesson" class="message-box">
+            <button onclick="">下一步</button>
+        </div>
+
+        <script>
+            //自行移动功能核心逻辑
+            const btn = document.getElementById('movableBtn');
+            let posX = 0;
+            let posY = 0;
+            let spdX = 0.6;
+            let spdY = 0.4;
+            btn.style.left= '10px';
+            btn.style.top= '10px';
+
+            function autoMove(){
+                const maxX=window.innerWidth-btn.offsetWidth; // 最大水平坐标（窗口宽度-按钮宽度）
+                const maxY=window.innerHeight-btn.offsetHeight; // 最大垂直坐标（窗口高度-按钮高度）
+                posX+=spdX;
+                posY+=spdY;
+                if (posX >= maxX ||posX <=0){spdX *= -1;}
+                if (posY >= maxY ||posY <=0){spdY *= -1;}
+                btn.style.left = posX+'px';
+                btn.style.top = posY+'px';
+                showPosition();
+                requestAnimationFrame(autoMove); // 循环调用自身实现动画
+            }
+            autoMove();
+            //显示坐标和检查位置
+            function showPosition() {
+                // 获取当前位置
+                const x = parseInt(btn.style.left) || 0;  // 水平坐标
+                const y = parseInt(btn.style.top) || 0;   // 垂直坐标
+                
+                // 更新坐标显示
+                const infoDiv = document.getElementById('positionInfo');
+                infoDiv.innerHTML = `当前坐标：X=${x}px, Y=${y}px`;
+                infoDiv.style.display = 'block';  // 显示消息容器
+
+                // 检查是否在触发区域（示例：X大于200px）
+                if (x > 200) {
+                    document.getElementById('nextLesson').style.display = 'block';
+                    infoDiv.innerHTML += '<br>发现隐藏区域！';
+                }
+            }
+        </script>
+    </body>
+</html>
