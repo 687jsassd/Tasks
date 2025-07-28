@@ -2,9 +2,10 @@ package service
 
 import (
 	"errors"
-	"golang.org/x/crypto/bcrypt"
 	"gorm_learn/models"
 	"gorm_learn/repository"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserService struct {
@@ -109,6 +110,16 @@ func (s *UserService) UpdateProfile(userID uint, updateData map[string]interface
 
 // ActivateUser 激活用户
 func (s *UserService) ActivateUser(userID uint) error {
+	// 检查用户是否存在
+	user, err := s.Repo.GetByID(userID)
+	if err != nil {
+		return errors.New("用户不存在")
+	}
+	// 检查用户是否已激活
+	if user.IsActive {
+		return errors.New("用户已经激活,不能重复激活")
+	}
+
 	return s.Repo.ActivateUser(userID)
 }
 
@@ -117,7 +128,7 @@ func (s *UserService) DeleteUser(userID uint) error {
 	// 检查用户是否存在
 	user, err := s.Repo.GetByID(userID)
 	if err != nil {
-		return err
+		return errors.New("用户不存在")
 	}
 
 	// 防止删除管理员

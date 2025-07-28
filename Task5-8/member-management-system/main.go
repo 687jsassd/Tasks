@@ -128,6 +128,8 @@ func activateHandler(c *gin.Context) {
 		statusCode := http.StatusInternalServerError
 		if strings.Contains(err.Error(), "用户不存在") {
 			statusCode = http.StatusBadRequest
+		} else if strings.Contains(err.Error(), "用户已经激活") {
+			statusCode = http.StatusBadRequest
 		}
 		c.JSON(statusCode, Response{
 			Code:    statusCode,
@@ -284,10 +286,13 @@ func loginHandler(c *gin.Context) {
 		message := "登录失败: " + err.Error()
 		if strings.Contains(err.Error(), "用户不存在") {
 			statusCode = http.StatusUnauthorized
+			//避免泄露信息
+			message = "登录失败: 用户不存在或密码错误"
 		} else if strings.Contains(err.Error(), "未激活") {
 			statusCode = http.StatusForbidden
 		} else if strings.Contains(err.Error(), "密码错误") {
 			statusCode = http.StatusUnauthorized
+			message = "登录失败: 用户不存在或密码错误"
 		}
 		c.JSON(statusCode, Response{
 			Code:    statusCode,

@@ -13,8 +13,8 @@ type User struct {
 	Name      string         `gorm:"size:64;not null" json:"name"`
 	Email     string         `gorm:"size:128;uniqueIndex;not null" json:"email"`
 	Phone     string         `gorm:"size:20;uniqueIndex;not null" json:"phone"`
-	Password  string         `gorm:"size:128;not null" json:"-"` // 密码不返回给前端
-	Role      int            `gorm:"not null;default:1" json:"role"` // 1:普通用户, 2:管理员
+	Password  string         `gorm:"size:128;not null" json:"-"`     // 密码不返回给前端
+	Role      int            `gorm:"not null;default:0" json:"role"` // 0:普通用户, 1:管理员
 	IsActive  bool           `gorm:"not null;default:false" json:"is_active"`
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`
@@ -23,6 +23,6 @@ type User struct {
 
 // 角色常量定义
 const (
-	RoleUser  = 1 // 普通用户
-	RoleAdmin = 2 // 管理员
+	RoleUser  = 0 // 普通用户
+	RoleAdmin = 1 // 管理员
 )
